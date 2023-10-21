@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Survey Form</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
+
+        .survey-form {
+            background-color: #eee;
+            border: 2px solid #333;
+            padding: 20px;
+            box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            text-align: left;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        label, input, select {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding: 20px;
+            border: 2px solid #333;
+            background-color: #fff;
+            width: 50%;
+            top: 20%;
+            left: 25%;
+            box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .popup .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="survey-form">
+        <h1>Survey Form</h1>
+        <form id="surveyForm">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" required><br><br>
+
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" required><br><br>
+
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" required><br><br>
+
+            <label for="country">Country:</label>
+            <select id="country" name="country" required>
+                <option value="USA">USA</option>
+                <option value="Canada">Canada</option>
+                <option value="UK">UK</option>
+                <!-- Add more options -->
+            </select><br><br>
+
+            <label>Gender:</label><br>
+            <input type="radio" id="male" name="gender" value="Male">
+            <label for="male">Male</label>
+            <input type="radio" id="female" name="gender" value="Female">
+            <label for="female">Female</label><br><br>
+
+            <label for="profession">Profession:</label>
+            <input type="text" id="profession" name="profession" required><br><br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br><br>
+
+            <label for="mobile">Mobile Number:</label>
+            <input type="tel" id="mobile" name="mobile" required><br><br>
+
+            <div class="button-row">
+                <button type="button" id="submitButton" onclick="submitForm()">Submit</button>
+                <button type="button" id="resetButton" onclick="resetForm()">Reset</button>
+            </div>
+        </form>
+    </div>
+    <div class="popup" id="popup">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <h2>Survey Form Data</h2>
+        <div id="popupContent"></div>
+    </div>
+    <script>
+        function submitForm() {
+            const form = document.getElementById('surveyForm');
+            if (!form.checkValidity()) {
+                alert('Please fill in all the required fields.');
+                return;
+            }
+
+            const popupContent = document.getElementById('popupContent');
+            const formData = new FormData(form);
+            let content = '<ul>';
+            for (const [key, value] of formData.entries()) {
+                content += `<li><strong>${key}:</strong> ${value}</li>`;
+            }
+            content += '</ul>';
+            popupContent.innerHTML = content;
+
+            const popup = document.getElementById('popup');
+            popup.style.display = 'block';
+        }
+
+        function resetForm() {
+            document.getElementById('surveyForm').reset();
+        }
+
+        function closePopup() {
+            const popup = document.getElementById('popup');
+            popup.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
